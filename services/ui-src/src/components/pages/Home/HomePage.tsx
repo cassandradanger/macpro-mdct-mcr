@@ -12,11 +12,15 @@ import {
 import { checkDateRangeStatus, useUser } from "utils";
 // verbiage
 import verbiage from "verbiage/pages/home";
+// store
+import { useAppSelector } from "../../../redux-poc/useAppSelector";
 
 export const HomePage = () => {
   const { bannerData } = useContext(AdminBannerContext);
   const { userIsEndUser, userReports } = useUser().user ?? {};
   const [isBannerActive, setIsBannerActive] = useState(false);
+  const newBannerData = useAppSelector((state) => state.bannerData);
+  // console.log("test", newBannerData);
 
   useEffect(() => {
     let bannerActivity = false;
@@ -35,7 +39,7 @@ export const HomePage = () => {
   return (
     <>
       <Collapse in={showBanner}>
-        <Banner bannerData={bannerData} />
+        <Banner bannerData={newBannerData} />
       </Collapse>
       <PageTemplate sx={sx.layout}>
         {/* show standard view to state users */}

@@ -8,7 +8,7 @@ import { ApiProvider, UserProvider } from "utils";
 import { asyncWithLDProvider } from "launchdarkly-react-client-sdk";
 // store
 import { Provider } from "react-redux";
-import { store } from "store";
+import { store } from "redux-poc/store";
 // components
 import { App, Error } from "components";
 // styles
