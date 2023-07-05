@@ -1,8 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { RootState } from "./store";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define a type for the slice state
-interface BannerDataState {
+export interface CounterState {
   title: string;
   description: string;
   link: string;
@@ -10,10 +9,11 @@ interface BannerDataState {
   startDate: number;
   endDate: number;
   isActive: boolean;
+  value: number;
 }
 
 // Define the initial state using that type
-const initialState: BannerDataState = {
+const initialState: CounterState = {
   title: "here is a title",
   description: "here is a descriptionssss",
   link: "www.coforma.io",
@@ -21,22 +21,36 @@ const initialState: BannerDataState = {
   startDate: 12122023,
   endDate: 12132023,
   isActive: true,
+  value: 0,
 };
 
 export const bannerDataSlice = createSlice({
   name: "bannerData",
-  initialState: initialState,
+  initialState,
   reducers: {
-    // addBannerData: (state, action) => {},
+    newDescription: (state) => {
+      // console.log("increment", state);
+
+      /*
+       * Redux Toolkit allows us to write "mutating" logic in reducers. It
+       * doesn't actually mutate the state because it uses the Immer library,
+       * which detects changes to a "draft state" and produces a brand new
+       * immutable state based off those changes
+       */
+
+      state.description = "this is a new description";
+    },
+    decrement: (state) => {
+      state.value -= 1;
+    },
+    incrementByAmount: (state, action: PayloadAction<number>) => {
+      state.value += action.payload;
+    },
   },
 });
 
-// this is for dispatch
+// Action creators are generated for each case reducer function
+export const { newDescription, decrement, incrementByAmount } =
+  bannerDataSlice.actions;
 
-// export const { addBannerData } = bannerDataSlice.actions;
-
-// Other code such as selectors can use the imported `RootState` type
-export const bannerDataExport = (state: RootState) => state;
-
-// this is for configureStore
 export default bannerDataSlice.reducer;

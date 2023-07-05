@@ -40,17 +40,17 @@ const ldClientId = config.REACT_APP_LD_SDK_CLIENT;
   ReactDOM.render(
     <ErrorBoundary FallbackComponent={Error}>
       <Router>
-        <UserProvider>
-          <ApiProvider>
-            <ChakraProvider theme={theme}>
-              <LDProvider>
-                <Provider store={store}>
+        <Provider store={store}>
+          <UserProvider>
+            <ApiProvider>
+              <ChakraProvider theme={theme}>
+                <LDProvider>
                   <App />
-                </Provider>
-              </LDProvider>
-            </ChakraProvider>
-          </ApiProvider>
-        </UserProvider>
+                </LDProvider>
+              </ChakraProvider>
+            </ApiProvider>
+          </UserProvider>
+        </Provider>
       </Router>
     </ErrorBoundary>,
     document.getElementById("root")

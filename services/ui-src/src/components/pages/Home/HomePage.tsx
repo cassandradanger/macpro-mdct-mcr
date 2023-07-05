@@ -13,14 +13,24 @@ import { checkDateRangeStatus, useUser } from "utils";
 // verbiage
 import verbiage from "verbiage/pages/home";
 // store
-import { useAppSelector } from "../../../redux-poc/useAppSelector";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../../redux-poc/useAppSelector";
+import { newDescription } from "../../../redux-poc/bannerDataSlice";
 
 export const HomePage = () => {
   const { bannerData } = useContext(AdminBannerContext);
   const { userIsEndUser, userReports } = useUser().user ?? {};
   const [isBannerActive, setIsBannerActive] = useState(false);
   const newBannerData = useAppSelector((state) => state.bannerData);
+  const dispatch = useAppDispatch();
   // console.log("test", newBannerData);
+
+  useEffect(() => {
+    // console.log("good morning");
+    dispatch(newDescription());
+  }, []);
 
   useEffect(() => {
     let bannerActivity = false;
