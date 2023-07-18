@@ -1,4 +1,17 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+
+// ACTION
+export const getData = createAsyncThunk(
+  "posts/getPosts",
+  async (data: any, thunkApi: any) => {
+    try {
+      const response = "hihi helloooooo";
+      return response;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
 
 // Define a type for the slice state
 export interface CounterState {
@@ -10,6 +23,8 @@ export interface CounterState {
   endDate: number;
   isActive: boolean;
   value: number;
+  loading: boolean;
+  error: any;
 }
 
 // Define the initial state using that type
@@ -22,13 +37,15 @@ const initialState: CounterState = {
   endDate: 12132023,
   isActive: true,
   value: 0,
+  loading: false,
+  error: null,
 };
 
 export const bannerDataSlice = createSlice({
   name: "bannerData",
   initialState,
   reducers: {
-    newDescription: (state) => {
+    newDescription: (state: any) => {
       // console.log("increment", state);
 
       /*
@@ -40,12 +57,18 @@ export const bannerDataSlice = createSlice({
 
       state.description = "this is a new description";
     },
-    decrement: (state) => {
+    decrement: (state: any) => {
       state.value -= 1;
     },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
+    incrementByAmount: (state: any, action: PayloadAction<number>) => {
       state.value += action.payload;
     },
+  },
+  extraReducers(builder: any) {
+    // builder.addCase(getData.pending, (state: any, action: object) => {
+    builder.addCase(getData.pending, (state: any) => {
+      state.loading = true;
+    });
   },
 });
 
