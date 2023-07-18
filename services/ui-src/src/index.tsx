@@ -6,6 +6,9 @@ import config from "config";
 // utils
 import { ApiProvider, UserProvider } from "utils";
 import { asyncWithLDProvider } from "launchdarkly-react-client-sdk";
+// store
+import { Provider } from "react-redux";
+import { store } from "redux-poc/store";
 // components
 import { App, Error } from "components";
 // styles
@@ -37,15 +40,17 @@ const ldClientId = config.REACT_APP_LD_SDK_CLIENT;
   ReactDOM.render(
     <ErrorBoundary FallbackComponent={Error}>
       <Router>
-        <UserProvider>
-          <ApiProvider>
-            <ChakraProvider theme={theme}>
-              <LDProvider>
-                <App />
-              </LDProvider>
-            </ChakraProvider>
-          </ApiProvider>
-        </UserProvider>
+        <Provider store={store}>
+          <UserProvider>
+            <ApiProvider>
+              <ChakraProvider theme={theme}>
+                <LDProvider>
+                  <App />
+                </LDProvider>
+              </ChakraProvider>
+            </ApiProvider>
+          </UserProvider>
+        </Provider>
       </Router>
     </ErrorBoundary>,
     document.getElementById("root")
